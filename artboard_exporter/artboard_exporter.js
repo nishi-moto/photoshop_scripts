@@ -31,17 +31,17 @@ if (!destStatics.exists) {
 function saveLayer(layer, lname, format, path, shouldMerge) {
   activeDocument.activeLayer = layer;
   dupLayers();
-  if (shouldMerge === undefined || shouldMerge === true) {
-    activeDocument.mergeVisibleLayers();
-  }
-  activeDocument.trim(TrimType.TRANSPARENT,true,true,true,true);
-  var saveFile = File(path + "/" + lname);
-  if(format === 'psd'){
-    savePSD(saveFile);
-  } else {
+  if(format !== 'psd'){
+    if (shouldMerge === undefined || shouldMerge === true) {
+      activeDocument.mergeVisibleLayers();
+    }
+    activeDocument.trim(TrimType.TRANSPARENT,true,true,true,true);
+    var saveFile = File(path + "/" + lname);
     SavePNG(saveFile);
-  } 
-
+  } else {
+    var saveFile = File(path + "/" + lname);
+    savePSD(saveFile);   
+  }
   app.activeDocument.close(SaveOptions.DONOTSAVECHANGES);
 }
 
