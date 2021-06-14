@@ -1,6 +1,6 @@
 #target photoshop
 // Export each top layer group (artboards) as the desired file type
-var destStatics = new Folder(activeDocument.path + '/../EXPORT_LUDWIN/');
+var destStatics = new Folder(activeDocument.path + '/../EXPORT/');
 var doc = activeDocument;
 if (!destStatics.exists) {
     destStatics.create();
