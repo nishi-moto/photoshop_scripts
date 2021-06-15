@@ -19,10 +19,10 @@ if (!folderpng.exists) {
 }
 
 (function getLayers(el) {
-   var lname = [];
+  var lname = [];
 
-	 for (var a = 0; a < el.layerSets.length; a++) {
-		 lname = el.layerSets[a].name;
+  for (var a = 0; a < el.layerSets.length; a++) {
+   lname = el.layerSets[a].name;
      var arrNames = lname.split("_");
      
      for (var i = 0; i < arrNames.length; i++){
@@ -30,7 +30,7 @@ if (!folderpng.exists) {
           saveLayer(el.layers.getByName(lname), arrNames[0]+'.'+arrNames[i], arrNames[i]);
        }
      }
-	 }
+  }
 })(activeDocument)
 
 function saveLayer(layer, lname, format) {
