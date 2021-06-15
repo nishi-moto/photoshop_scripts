@@ -1,8 +1,16 @@
 # Artboard Exporter
 
-Made with [ExtendScript](https://www.adobe.com/devnet/scripting/estk.html).
+* Made with [ExtendScript](https://www.adobe.com/devnet/scripting/estk.html).
 
-Current supported formats: PNG, JPG and PSD
+* Documentation [here](https://www.adobe.com/content/dam/acom/en/devnet/photoshop/pdfs/photoshop-javascript-ref-2020.pdf).
+
+* List for Photoshop constants [here](http://web.archive.org/web/20140121053819/http://www.pcpix.com/Photoshop/char.htm).
+
+* More documentation [here](http://jongware.mit.edu/pscs5js_html/psjscs5/index_Color%20classes%20for%20Adobe%20Photoshop.html) and [here](http://objjob.phrogz.net/pshop/hierarchy).
+
+<br/>
+
+**Current supported formats: PNG, JPG and PSD**
 
 <BR/>
 

@@ -22,12 +22,12 @@ if (!folderpng.exists) {
   var lname = [];
 
   for (var a = 0; a < el.layerSets.length; a++) {
-   lname = el.layerSets[a].name;
-     var arrNames = lname.split("_");
+    lname = el.layerSets[a].name;
+    var arrNames = lname.split("_");
      
      for (var i = 0; i < arrNames.length; i++){
        if(i !=0){
-          saveLayer(el.layers.getByName(lname), arrNames[0]+'.'+arrNames[i], arrNames[i]);
+          saveLayer(el.layers.getByName(lname), arrNames[0] + '.' + arrNames[i], arrNames[i]);
        }
      }
   }
@@ -49,13 +49,13 @@ function saveLayer(layer, lname, format) {
 function dupLayers() {
   var actionDescriptor = new ActionDescriptor();
   var actionReference = new ActionReference();
-  actionReference.putClass( charIDToTypeID('Dcmn') );
-  actionDescriptor.putReference( charIDToTypeID('null'), actionReference );
-  actionDescriptor.putString( charIDToTypeID('Nm  '), activeDocument.activeLayer.name );
-  var ref74 = new ActionReference();
-  ref74.putEnumerated( charIDToTypeID('Lyr '), charIDToTypeID('Ordn'), charIDToTypeID('Trgt') );
-  actionDescriptor.putReference( charIDToTypeID('Usng'), ref74 );
-  executeAction( charIDToTypeID('Mk  '), actionDescriptor, DialogModes.NO );
+  actionReference.putClass(charIDToTypeID('Dcmn')); // charIDToTypeID converts a string into the ID photoshop can read. 'Dcmn' = Document
+  actionDescriptor.putReference(charIDToTypeID('null'), actionReference);
+  actionDescriptor.putString(charIDToTypeID('Nm  '), activeDocument.activeLayer.name); // Nm = name
+  var actionReference2 = new ActionReference();
+  actionReference2.putEnumerated(charIDToTypeID('Lyr '), charIDToTypeID('Ordn'), charIDToTypeID('Trgt')); // 'Lyr'= Layer, 'Ornd' = ordinal, 'Trgt' = targetEnum
+  actionDescriptor.putReference( charIDToTypeID('Usng'), actionReference2 );
+  executeAction(charIDToTypeID('Mk  '), actionDescriptor, DialogModes.NO); // 'Mk'= Make event
 };
 
 function SavePNG(saveFile){
