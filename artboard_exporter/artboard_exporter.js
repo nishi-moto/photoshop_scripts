@@ -1,6 +1,5 @@
 #target photoshop
 // Export each top layer group (artboards) as the desired file type
-var doc = activeDocument;
 var folder = new Folder(activeDocument.path + '/../EXPORT/');
 
 if (!folder.exists) {
@@ -27,7 +26,7 @@ if (!folder.exists) {
        }
      }
 	 }
-})(doc)
+})(activeDocument)
 
 function saveLayer(layer, lname, format, path, shouldMerge) {
   activeDocument.activeLayer = layer;
@@ -40,7 +39,7 @@ function saveLayer(layer, lname, format, path, shouldMerge) {
   } else {
     SavePNG(saveFile);
   }
-  app.activeDocument.close(SaveOptions.DONOTSAVECHANGES);
+  activeDocument.close(SaveOptions.DONOTSAVECHANGES);
 }
 
 function dupLayers() {
@@ -59,7 +58,7 @@ function SavePNG(saveFile){
   var pngOptions = new PNGSaveOptions();
   pngOptions.compression = 0;
   pngOptions.interlaced = false;
-  app.activeDocument.saveAs(new File(saveFile), pngOptions, true);
+  activeDocument.saveAs(new File(saveFile), pngOptions, true);
 }
 
 function SaveJPEG(saveFile){
@@ -68,7 +67,7 @@ function SaveJPEG(saveFile){
   jpegOptions.embedColorProfile = true;
   jpegOptions.matte = MatteType.NONE;
   jpegOptions.scans = 3;
-  app.activeDocument.saveAs(new File(saveFile), jpegOptions, true);
+  activeDocument.saveAs(new File(saveFile), jpegOptions, true);
 }
 
 function savePSD(saveFile) {
@@ -78,5 +77,5 @@ function savePSD(saveFile) {
   psdOptions.annotations = true; // Preserve annonations.
   psdOptions.alphaChannels = true; // Preserve alpha channels.
   psdOptions.spotColors = true; // Preserve spot colors.
-  app.activeDocument.saveAs(File(saveFile), psdOptions, true);
+  activeDocument.saveAs(File(saveFile), psdOptions, true);
 }
