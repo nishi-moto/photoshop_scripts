@@ -17,6 +17,6 @@ Current supported formats: PNG, JPG and PSD
 
 ### Using the script:
 * In your Photoshop, go to File > Scripts > Browse ...
-* Load the artboard_exporter.js file and wait. Voila!
-* You will find your exported files in the "EXPORT" folder, one level abobe as your current psd file.
+* Load the artboard_exporter.js file and wait. *Voila!*
+* You will find your exported files in the "EXPORT" folder, one level above as your current psd file.
 

@@ -1,9 +1,10 @@
 #target photoshop
 // Export each top layer group (artboards) as the desired file type
-var destStatics = new Folder(activeDocument.path + '/../EXPORT/');
 var doc = activeDocument;
-if (!destStatics.exists) {
-    destStatics.create();
+var folder = new Folder(activeDocument.path + '/../EXPORT/');
+
+if (!folder.exists) {
+    folder.create();
 }
 
 (function getLayers(el) {
@@ -22,7 +23,7 @@ if (!destStatics.exists) {
         } else if( arrNames[i] === 'psd'){
           exportName = arrNames[0]+'.'+arrNames[i];
         }
-        saveLayer(el.layers.getByName(lname), exportName, arrNames[i], destStatics, true);
+        saveLayer(el.layers.getByName(lname), exportName, arrNames[i], folder, false);
        }
      }
 	 }
@@ -31,48 +32,51 @@ if (!destStatics.exists) {
 function saveLayer(layer, lname, format, path, shouldMerge) {
   activeDocument.activeLayer = layer;
   dupLayers();
-  if(format !== 'psd'){
-    if (shouldMerge === undefined || shouldMerge === true) {
-      activeDocument.mergeVisibleLayers();
-    }
-    activeDocument.trim(TrimType.TRANSPARENT,true,true,true,true);
-    var saveFile = File(path + "/" + lname);
-    SavePNG(saveFile);
+  var saveFile = File(path + "/" + lname);
+  if(format === 'psd'){  
+    savePSD(saveFile);  
+  } else if(format === 'jpg') {
+    SaveJPEG(saveFile);
   } else {
-    var saveFile = File(path + "/" + lname);
-    savePSD(saveFile);   
+    SavePNG(saveFile);
   }
   app.activeDocument.close(SaveOptions.DONOTSAVECHANGES);
 }
 
 function dupLayers() {
-  var desc143 = new ActionDescriptor();
-  var ref73 = new ActionReference();
-  ref73.putClass( charIDToTypeID('Dcmn') );
-  desc143.putReference( charIDToTypeID('null'), ref73 );
-  desc143.putString( charIDToTypeID('Nm  '), activeDocument.activeLayer.name );
+  var actionDescriptor = new ActionDescriptor();
+  var actionReference = new ActionReference();
+  actionReference.putClass( charIDToTypeID('Dcmn') );
+  actionDescriptor.putReference( charIDToTypeID('null'), actionReference );
+  actionDescriptor.putString( charIDToTypeID('Nm  '), activeDocument.activeLayer.name );
   var ref74 = new ActionReference();
   ref74.putEnumerated( charIDToTypeID('Lyr '), charIDToTypeID('Ordn'), charIDToTypeID('Trgt') );
-  desc143.putReference( charIDToTypeID('Usng'), ref74 );
-  executeAction( charIDToTypeID('Mk  '), desc143, DialogModes.NO );
+  actionDescriptor.putReference( charIDToTypeID('Usng'), ref74 );
+  executeAction( charIDToTypeID('Mk  '), actionDescriptor, DialogModes.NO );
 };
 
 function SavePNG(saveFile){
-  var pngOpts = new ExportOptionsSaveForWeb;
-  pngOpts.format = SaveDocumentType.PNG
-  pngOpts.PNG8 = true;
-  pngOpts.transparency = true;
-  pngOpts.interlaced = false;
-  pngOpts.quality = 100;
-  activeDocument.exportDocument(new File(saveFile), ExportType.SAVEFORWEB, pngOpts);
+  var pngOptions = new PNGSaveOptions();
+  pngOptions.compression = 0;
+  pngOptions.interlaced = false;
+  app.activeDocument.saveAs(new File(saveFile), pngOptions, true);
+}
+
+function SaveJPEG(saveFile){
+  var jpegOptions = new JPEGSaveOptions();
+  jpegOptions.quality = 12;
+  jpegOptions.embedColorProfile = true;
+  jpegOptions.matte = MatteType.NONE;
+  jpegOptions.scans = 3;
+  app.activeDocument.saveAs(new File(saveFile), jpegOptions, true);
 }
 
 function savePSD(saveFile) {
-  var psd_Opt = new PhotoshopSaveOptions();
-  psd_Opt.layers = true; // Preserve layers.
-  psd_Opt.embedColorProfile = true; // Preserve color profile.
-  psd_Opt.annotations = true; // Preserve annonations.
-  psd_Opt.alphaChannels = true; // Preserve alpha channels.
-  psd_Opt.spotColors = true; // Preserve spot colors.
-  app.activeDocument.saveAs(File(saveFile), psd_Opt, true);
+  var psdOptions = new PhotoshopSaveOptions();
+  psdOptions.layers = true; // Preserve layers.
+  psdOptions.embedColorProfile = true; // Preserve color profile.
+  psdOptions.annotations = true; // Preserve annonations.
+  psdOptions.alphaChannels = true; // Preserve alpha channels.
+  psdOptions.spotColors = true; // Preserve spot colors.
+  app.activeDocument.saveAs(File(saveFile), psdOptions, true);
 }
