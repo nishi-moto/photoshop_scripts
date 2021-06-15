@@ -4,7 +4,7 @@
 
 * Documentation [here](https://www.adobe.com/content/dam/acom/en/devnet/photoshop/pdfs/photoshop-javascript-ref-2020.pdf).
 
-* List for Photoshop constants [here](http://web.archive.org/web/20140121053819/http://www.pcpix.com/Photoshop/char.htm).
+* List for Photoshop constants [here](https://github.com/nishi-moto/photoshop_scripts/blob/main/PhotoshopConstantsRosettaStone.md) or [here](http://web.archive.org/web/20140121053819/http://www.pcpix.com/Photoshop/char.htm).
 
 * More documentation [here](http://jongware.mit.edu/pscs5js_html/psjscs5/index_Color%20classes%20for%20Adobe%20Photoshop.html) and [here](http://objjob.phrogz.net/pshop/hierarchy).
 
