@@ -1,43 +1,47 @@
 #target photoshop
 // Export each top layer group (artboards) as the desired file type
 var folder = new Folder(activeDocument.path + '/../EXPORT/');
+var folderpsd = new Folder(activeDocument.path + '/../EXPORT/PSD');
+var folderjpeg = new Folder(activeDocument.path + '/../EXPORT/JPEG');
+var folderpng = new Folder(activeDocument.path + '/../EXPORT/PNG');
 
 if (!folder.exists) {
     folder.create();
 }
+if (!folderpsd.exists) {
+  folderpsd.create();
+}
+if (!folderjpeg.exists) {
+  folderjpeg.create();
+}
+if (!folderpng.exists) {
+  folderpng.create();
+}
 
 (function getLayers(el) {
-	 for (var a = 0; a < el.layerSets.length; a++) {
-		 var lname = el.layerSets[a].name;
-     var exportName = '';
+   var lname = [];
 
+	 for (var a = 0; a < el.layerSets.length; a++) {
+		 lname = el.layerSets[a].name;
      var arrNames = lname.split("_");
      
      for (var i = 0; i < arrNames.length; i++){
        if(i !=0){
-        if( arrNames[i] === 'jpg'){
-          exportName = arrNames[0]+'.'+arrNames[i];
-        } else if( arrNames[i] === 'png'){
-          exportName = arrNames[0]+'.'+arrNames[i];
-        } else if( arrNames[i] === 'psd'){
-          exportName = arrNames[0]+'.'+arrNames[i];
-        }
-        saveLayer(el.layers.getByName(lname), exportName, arrNames[i], folder, false);
+          saveLayer(el.layers.getByName(lname), arrNames[0]+'.'+arrNames[i], arrNames[i]);
        }
      }
 	 }
 })(activeDocument)
 
-function saveLayer(layer, lname, format, path, shouldMerge) {
+function saveLayer(layer, lname, format) {
   activeDocument.activeLayer = layer;
   dupLayers();
-  var saveFile = File(path + "/" + lname);
-  if(format === 'psd'){  
-    savePSD(saveFile);  
+  if(format === 'psd'){ 
+    savePSD(File(folderpsd + "/" + lname));   
   } else if(format === 'jpg') {
-    SaveJPEG(saveFile);
+    SaveJPEG(File(folderjpeg + "/" + lname));
   } else {
-    SavePNG(saveFile);
+    SavePNG(File(folderpng + "/" + lname));
   }
   activeDocument.close(SaveOptions.DONOTSAVECHANGES);
 }
